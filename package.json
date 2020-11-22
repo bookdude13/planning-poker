@@ -1,19 +1,17 @@
 {
   "name": "planning-poker",
-  "version": "0.1.0",
-  "description": "Simple planning poker server application using socket.io",
-  "author": "Ryan Fredlund",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bookdude13/planning-poker.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bookdude13/planning-poker/issues"
-  },
-  "homepage": "https://github.com/bookdude13/planning-poker#readme",
-  "main": "index.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"todo\""
+    "start": "node ./bin/www",
+    "debug": "DEBUG=planning-poker:* npm start"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
   }
 }
