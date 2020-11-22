@@ -1,14 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-require('dotenv').config()
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+require('dotenv').config();
+const config = require('./config');
 
-var indexRouter = require('./routes/index');
-var roomsRouter = require('./routes/rooms');
+// Session management
+const session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
 
-var app = express();
+// Routing
+const indexRouter = require('./routes/index');
+const roomsRouter = require('./routes/rooms');
+
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,6 +26,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Session
+app.use(session({
+  store: new MySQLStore(config.cookieStoreConfig),
+  key: 'ppokses',
+  secret: config.cookieSecret,
+  resave: false,
+  saveUninitialized: false
+}));
+
+// Routes
 app.use('/', indexRouter);
 app.use('/rooms', roomsRouter);
 
