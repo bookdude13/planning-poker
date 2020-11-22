@@ -13,7 +13,10 @@ router.get('/:roomId', [ validateRoomId ], (req, res, next) => {
     return res.status(400).render('error', { "message": "Room not found." });
   }
 
-  res.status(200).render('room', { 'roomId': req.params.roomId });
+  res.status(200).render('room', {
+    'title': 'Room ' + req.params.roomId,
+    'roomId': req.params.roomId
+  });
 });
 
 module.exports = router;
