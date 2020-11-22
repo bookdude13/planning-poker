@@ -10,7 +10,7 @@ router.get('/:roomId', [ validateRoomId ], (req, res, next) => {
   const errors = validator.validationResult(req);
   if (!errors.isEmpty()) {
     console.error("Validation error: " + JSON.stringify(errors.array()));
-    return res.status(400).render('error', { "message": "Room not found." });
+    return res.status(404).render('error', { "message": "Room not found." });
   }
 
   res.status(200).render('room', {
