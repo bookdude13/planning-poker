@@ -1,9 +1,9 @@
-DROP DATABASE IF EXISTS planning_poker;
-CREATE DATABASE planning_poker;
+DROP DATABASE IF EXISTS planningpoker;
+CREATE DATABASE planningpoker;
 CREATE USER IF NOT EXISTS '<user>'@'<host>' IDENTIFIED WITH mysql_native_password BY '<pass>';
-GRANT ALL ON planning_poker.* TO '<user>'@'<host>';
+GRANT ALL ON planningpoker.* TO '<user>'@'<host>';
 
-USE planning_poker;
+USE planningpoker;
 CREATE TABLE player (
  	player_id INT AUTO_INCREMENT PRIMARY KEY,
  	player_name VARCHAR(64) NOT NULL,
