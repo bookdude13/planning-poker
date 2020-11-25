@@ -1,5 +1,15 @@
 extends layout
 
+block scripts
+  script(src='/js/index.js')
+
 block content
   h1= title
   p Welcome to #{title}
+  button#btn-new-room New Room
+  h2 Rooms
+  each room in rooms
+    - let joinLink = window.location.href + "rooms/" + room.room_id;
+    a(href=joinLink class='join-room-link')= room.room_id
+  else
+    p No rooms found.
