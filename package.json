@@ -2,7 +2,7 @@
   "name": "planning-poker",
   "version": "0.1.0",
   "scripts": {
-    "start": "cross-env DEBUG=* nodemon ./bin/www",
+    "start": "cross-env DEBUG=planning-poker:* nodemon ./bin/www",
     "test": "mocha tests/**/*.js --exit"
   },
   "dependencies": {
