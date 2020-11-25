@@ -1,13 +1,12 @@
 DROP DATABASE IF EXISTS planningpoker;
 CREATE DATABASE planningpoker;
-CREATE USER IF NOT EXISTS '<user>'@'<host>' IDENTIFIED WITH mysql_native_password BY '<pass>';
-GRANT ALL ON planningpoker.* TO '<user>'@'<host>';
+CREATE USER IF NOT EXISTS '<user>'@'localhost' IDENTIFIED WITH mysql_native_password BY '<pass>';
+GRANT ALL ON planningpoker.* TO '<user>'@'localhost';
 
 USE planningpoker;
 CREATE TABLE player (
  	player_id INT AUTO_INCREMENT PRIMARY KEY,
  	player_name VARCHAR(64) NOT NULL,
- 	player_type ENUM('admin', 'voter', 'observer', 'none') NOT NULL,
  	current_room INT,
  	INDEX (current_room)
 );
