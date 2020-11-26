@@ -6,9 +6,9 @@ class SocketHandler {
     start() {
         console.log("starting");
         this.io.on('connection', (socket) => {
-            console.log('User connected');
+            console.debug('User connected');
             socket.on('disconnect', () => {
-                console.log('User disconnected');
+                console.debug('User disconnected');
             });
         });
     }

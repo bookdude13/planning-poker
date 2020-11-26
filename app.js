@@ -17,6 +17,9 @@ const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const roomsRouter = require('./routes/rooms');
 
+// Storage
+let playerStorage = require('./app/playerStorage');
+
 function haltOnTimeout(req, res, next) {
   if (!req.timedout) next();
 }
@@ -45,6 +48,14 @@ app.use(session({
 }));
 
 // Routes
+app.use([ '/', '/login', '/logout' ], (req, res, next) => {
+  // Reset current room when leaving a room page (async)
+  if (req.session.player_id) {
+    playerStorage.updatePlayerRoom(req.session.player_id, null);
+  }
+
+  next();
+});
 app.use('/login', loginRouter);
 app.use([ '/', '/rooms' ], (req, res, next) => {
   // Redirect if we don't have a valid session

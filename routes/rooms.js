@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const validator = require('express-validator');
 let roomStorage = require('../app/roomStorage');
+let playerStorage = require('../app/playerStorage');
 
 // Validations
 const validateRoomId = validator.param('roomId').trim().isUUID(4);
@@ -21,6 +22,9 @@ router.get('/:roomId', [ validateRoomId ], (req, res, next) => {
       if (room === null) {
         throw Error("Room not found");
       }
+
+      // Update current room (async)
+      playerStorage.updatePlayerRoom(req.session.player_id, room.room_id);
 
       res.status(200).render('room', {
         'title': 'Room ' + room.room_name,

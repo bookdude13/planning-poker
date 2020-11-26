@@ -46,8 +46,16 @@ async function removePlayer(playerId) {
   });
 }
 
+async function updatePlayerRoom(playerId, roomId) {
+  return storage.query(
+    "UPDATE player SET current_room = ? WHERE player_id = ?",
+    [ roomId, playerId ]
+  );
+}
+
 module.exports = {
   getPlayer,
   createPlayer,
-  removePlayer
+  removePlayer,
+  updatePlayerRoom
 }
