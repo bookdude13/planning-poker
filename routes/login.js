@@ -8,10 +8,6 @@ const validatePlayerName = validator.body('playerName').trim().isAlphanumeric().
 
 /* GET login page. */
 router.get('/', async (req, res) => {
-  if (!req.session.player_id) {
-    //req.session.player_id = 1;
-  }
-
   res.render('login', {
     title: "Login",
     loginMessage: ""
@@ -29,7 +25,25 @@ router.post('/', [ validatePlayerName ], async (req, res) => {
     });
   }
 
-  res.redirect('/');
+  playerStorage.createPlayer(req.body.playerName)
+  .then((newPlayerId) => {
+    if (newPlayerId === null) {
+      return res.status(500).render('login', {
+        title: "Login",
+        loginMessage: "Failed to create player. Please try again."
+      });
+    }
+
+    req.session.player_id = newPlayerId;
+    return res.redirect('/');
+  })
+  .catch((err) => {
+    console.error(err);
+    return res.status(500).render('login', {
+      title: "Login",
+      loginMessage: "Failed to create player. Please try again."
+    })
+  });
 });
 
 module.exports = router;
