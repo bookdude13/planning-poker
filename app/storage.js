@@ -5,6 +5,7 @@ var pool;
 function getPool() {
     if (pool) return pool;
     pool = mysql.createPool({
+        connectionLimit: 10,
         host: config.db.host,
         user: config.db.username,
         password: config.db.password,
@@ -13,28 +14,13 @@ function getPool() {
     return pool;
 }
 
-async function getConnection() {
-    return new Promise((resolve, reject) => {
-        let pool = getPool();
-        pool.getConnection((err, connection) => {
-            if (err) reject(err);
-            resolve(connection);
-        });
-    });
-}
-
 async function query(query, args) {
     return new Promise((resolve, reject) => {
-        getConnection()
-            .then((connection) => {
-                connection.query(query, args, (err, result) => {
-                    if (err) reject(err);
-                    resolve(result);
-                });
-            })
-            .catch((err) => {
-                reject(err);
-            });
+        let pool = getPool();
+        pool.query(query, args, (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
     });
 }
 
