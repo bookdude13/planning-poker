@@ -37,8 +37,16 @@ app.use(session({
 }));
 
 // Routes
-app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use([ '/', '/rooms' ], (req, res, next) => {
+  // Redirect if we don't have a valid session
+  if (!req.session.player_id) {
+    return res.redirect('/login');
+  }
+
+  next();
+});
+app.use('/', indexRouter);
 app.use('/rooms', roomsRouter);
 
 // catch 404 and forward to error handler

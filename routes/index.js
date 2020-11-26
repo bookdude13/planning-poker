@@ -20,11 +20,6 @@ async function getPlayerOrGenerated(player_id) {
 
 /* GET home page. */
 router.get('/', async (req, res) => {
-  // TODO get from login page
-  if (!req.session.player_id) {
-    req.session.player_id = 1;
-  }
-
   let player = await getPlayerOrGenerated(req.session.player_id);
   let rooms = await roomStorage.getRooms();
 

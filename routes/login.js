@@ -9,7 +9,7 @@ const validatePlayerName = validator.body('playerName').trim().isAlphanumeric().
 /* GET login page. */
 router.get('/', async (req, res) => {
   if (!req.session.player_id) {
-    req.session.player_id = 1;
+    //req.session.player_id = 1;
   }
 
   res.render('login', {
