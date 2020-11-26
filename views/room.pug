@@ -1,4 +1,5 @@
 extends layout
 
 block content
-  h1 Room #{roomId}
+  - let roomName = room.room_name;
+  h1 Room #{roomName}

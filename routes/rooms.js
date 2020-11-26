@@ -16,19 +16,21 @@ router.get('/:roomId', [ validateRoomId ], (req, res, next) => {
   }
 
   // Get room
-  var room;
-  try {
-    room = roomStorage.getRoom(req.params.roomId);
-  } catch (err) {
-    console.error("Failed room lookup: " + JSON.stringify(err));
-    return res.status(404).render('error', { "message": "Room not found" });
-  }
+  roomStorage.getRoom(req.params.roomId)
+    .then((room) => {
+      if (room === null) {
+        throw Error("Room not found");
+      }
 
-  // Return
-  res.status(200).render('room', {
-    'title': 'Room ' + room.room_name,
-    'roomId': room.room_id
-  });
+      res.status(200).render('room', {
+        'title': 'Room ' + room.room_name,
+        'room': room
+      });
+    })
+    .catch((err) => {
+      console.error("Failed room lookup: " + JSON.stringify(err));
+      return res.status(404).render('error', { "message": "Room not found" });  
+    });
 });
 
 /* POST create room */

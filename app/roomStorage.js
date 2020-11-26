@@ -3,8 +3,16 @@ let storage = require('./storage');
 
 async function getRooms() {
   let rooms = await storage.query("SELECT * FROM room", {});
-  console.log(rooms);
   return rooms;
+}
+
+async function getRoom(roomId) {
+  let rooms = await storage.query(
+    "SELECT * FROM room WHERE room_id = ?",
+    [ roomId ]
+  );
+
+  return rooms.length > 0 ? rooms[0] : null;
 }
 
 async function createRoom(roomName, adminPlayerId) {
@@ -30,5 +38,6 @@ async function createRoom(roomName, adminPlayerId) {
 
 module.exports = {
   getRooms,
+  getRoom,
   createRoom
 }
