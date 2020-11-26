@@ -1,0 +1,14 @@
+extends layout
+
+block scripts
+  script(src='/js/login.js')
+
+block content
+  form#frm-login(action="/login" method="POST")
+    h1 Login
+    label(for="player-name") *Name (alphanumeric)
+    input(type="text" id="player-name" name="playerName")
+    br
+    input(type="submit" value="Login")
+    br
+    span#login-message #{loginMessage}

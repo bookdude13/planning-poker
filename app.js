@@ -12,6 +12,7 @@ var MySQLStore = require('express-mysql-session')(session);
 
 // Routing
 const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
 const roomsRouter = require('./routes/rooms');
 
 const app = express();
@@ -37,6 +38,7 @@ app.use(session({
 
 // Routes
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use('/rooms', roomsRouter);
 
 // catch 404 and forward to error handler
