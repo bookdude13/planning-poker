@@ -42,8 +42,47 @@ async function createRoom(roomName, adminPlayerId) {
   return roomId;
 }
 
+async function removeRoom(roomId) {
+  return storage.query(
+    "DELETE FROM room WHERE room_id = ?",
+    [ roomId ]
+  );
+}
+
+async function updateRoomAdmin(roomId, newAdminPlayerId) {
+  return storage.query(
+    "UPDATE room SET admin_id = ? WHERE room_id = ?",
+    [ newAdminPlayerId, roomId ]
+  );
+}
+
+async function reassignAdminOnLogout(oldAdminPlayerId) {
+  // Get all rooms the old admin controlled
+  let roomIds = await storage.query(
+    "SELECT room_id FROM room WHERE admin_id = ?",
+    [ oldAdminPlayerId ]
+  );
+
+  // Reassign admin
+  var allPromises = [];
+  for (var i = 0; i < roomIds.length; i++) {
+    let roomId = roomIds[i].room_id;
+    let otherPlayersInRoom = await storage.query(
+      "SELECT player_id FROM player WHERE current_room = ? AND player_id != ?",
+      [ roomId, oldAdminPlayerId ]
+    );
+    if (otherPlayersInRoom.length < 1) {
+      allPromises.push(removeRoom(roomId));
+    } else {
+      allPromises.push(updateRoomAdmin(roomId, otherPlayersInRoom[0].player_id));
+    }
+  }
+  await Promise.allSettled(allPromises);
+}
+
 module.exports = {
   getRooms,
   getRoom,
-  createRoom
+  createRoom,
+  reassignAdminOnLogout
 }

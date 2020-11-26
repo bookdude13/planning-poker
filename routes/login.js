@@ -25,7 +25,7 @@ router.post('/', [ validatePlayerName ], async (req, res) => {
     });
   }
 
-  playerStorage.createPlayer(req.body.playerName)
+  await playerStorage.createPlayer(req.body.playerName)
   .then((newPlayerId) => {
     if (newPlayerId === null) {
       return res.status(500).render('login', {
