@@ -45,7 +45,10 @@ router.post('/create', [ validateRoomName ], (req, res, next) => {
   let roomName = req.body.roomName;
   roomStorage.createRoom(roomName, req.session.player_id)
     .then((newRoomId) => {
-      return res.status(200).json({
+      if (!newRoomId) {
+        throw Error("Room not created");
+      }
+      return res.json({
         roomId: newRoomId
       });
     })

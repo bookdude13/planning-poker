@@ -14,8 +14,9 @@ $(document).ready(function() {
 
         // Create
         let onSuccess = (data, textStatus, jqXHR) => {
-            messageElement.css('color', 'black');
-            messageElement.text("Room created.");
+            // Go to created room
+            let roomId = data.roomId;
+            location.href = "/rooms/" + roomId;
         };
         let onError = (jqXHR, textStatus, errorThrown) => {
             messageElement.css('color', 'red');

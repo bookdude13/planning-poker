@@ -21,7 +21,7 @@ block content
   h2 Rooms
   each room in rooms
     - let joinLink = "rooms/" + room.room_id;
-    a(href=joinLink class='join-room-link')= room.room_id
+    a(href=joinLink class='join-room-link')= room.room_name
     br
   else
     p No rooms found.

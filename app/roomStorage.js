@@ -17,23 +17,29 @@ async function getRoom(roomId) {
 
 async function createRoom(roomName, adminPlayerId) {
   // Try to get room
-  let room = await storage.query(
+  let rooms = await storage.query(
     "SELECT room_id FROM room WHERE room_name = ? AND admin_id = ?",
     [roomName, adminPlayerId]
   );
-  if (room.length > 0) {
+  if (rooms.length > 0) {
     console.log("Room already exists");
-    return room.room_id;
+    return rooms[0].room_id;
   }
 
   // Add room
+  let roomId = uuidv4();
   let result = await storage.query(
     "INSERT INTO room (room_id, room_name, admin_id) VALUES (?)",
     [
-      [uuidv4(), roomName, adminPlayerId]
+      [roomId, roomName, adminPlayerId]
     ]
   );
-  return result.insertId;
+
+  console.log(result);
+  if (result.affectedRows !== 1) {
+    return null;
+  }
+  return roomId;
 }
 
 module.exports = {
