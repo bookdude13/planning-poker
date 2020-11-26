@@ -7,15 +7,16 @@ USE planningpoker;
 CREATE TABLE player (
  	player_id INT AUTO_INCREMENT PRIMARY KEY,
  	player_name VARCHAR(64) NOT NULL,
- 	current_room INT,
+ 	current_room VARCHAR(36),
  	INDEX (current_room)
 );
 
 CREATE TABLE room(
-	room_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	room_id VARCHAR(36) PRIMARY KEY NOT NULL,
 	room_name VARCHAR(64) NOT NULL,
 	admin_id INT NOT NULL,
-	FOREIGN KEY (admin_id) REFERENCES player(player_id)
+	FOREIGN KEY (admin_id) REFERENCES player(player_id),
+	UNIQUE (room_name, admin_id)
 );
 
 -- Add after room table exists
@@ -29,7 +30,7 @@ CREATE TABLE ticket(
 	ticket_name VARCHAR(64) NOT NULL,
 	order_index INT NOT NULL,
 	state ENUM('incomplete', 'complete', 'skipped'),
-	room_id INT NOT NULL,
+	room_id VARCHAR(36) NOT NULL,
 	FOREIGN KEY (room_id) REFERENCES room(room_id)
 );
 

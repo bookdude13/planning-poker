@@ -6,11 +6,21 @@ block scripts
 block content
   h1= title
   - playerName = player.player_name ?? 'Player';
-  p Welcome #{playerName}
-  button#btn-new-room New Room
+  p Welcome #{playerName}!
+  hr
+  #create-room
+    h2 Room Creation
+    label(for="create-room-name") Room name (alphanumeric)
+    input(type="text" id="create-room-name" name="room-name")
+    br
+    button#btn-create-room Create Room
+    br
+    span#create-room-message
+  hr
   h2 Rooms
   each room in rooms
-    - let joinLink = window.location.href + "rooms/" + room.room_id;
+    - let joinLink = "rooms/" + room.room_id;
     a(href=joinLink class='join-room-link')= room.room_id
+    br
   else
     p No rooms found.

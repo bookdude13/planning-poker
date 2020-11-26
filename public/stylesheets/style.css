@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+input {
+  margin: 10px;
+}
+
+/* Props broc.seib https://stackoverflow.com/questions/14217902/how-to-set-empty-span-height-equal-to-default-line-height */
+span:empty:before {
+  content: "\200b";
+}
