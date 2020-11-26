@@ -34,4 +34,8 @@ $(document).ready(function() {
             timeout: 3000
         });
     });
+
+    $('#btn-logout').click((e) => {
+        location.href = "/logout";
+    });
 });

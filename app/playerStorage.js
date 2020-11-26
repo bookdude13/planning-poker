@@ -32,7 +32,22 @@ async function createPlayer(playerName) {
   return newPlayerId;
 }
 
+async function removePlayer(playerId) {
+  await storage.query(
+    "DELETE FROM player WHERE player_id = ?",
+    [ playerId ]
+  )
+  .then((result) => {
+    return true;
+  })
+  .catch((err) => {
+    console.error(err);
+    return false;
+  });
+}
+
 module.exports = {
   getPlayer,
-  createPlayer
+  createPlayer,
+  removePlayer
 }

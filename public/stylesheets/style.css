@@ -11,6 +11,10 @@ input {
   margin: 10px;
 }
 
+#btn-logout {
+  margin-left: 15px;
+}
+
 #login-message {
   color: #FF0000;
 }

@@ -8,6 +8,7 @@ CREATE TABLE player (
  	player_id INT AUTO_INCREMENT PRIMARY KEY,
  	player_name VARCHAR(64) NOT NULL,
  	current_room VARCHAR(36),
+ 	creation_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
  	INDEX (current_room)
 );
 

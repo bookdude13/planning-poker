@@ -13,6 +13,7 @@ var MySQLStore = require('express-mysql-session')(session);
 // Routing
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
+const logoutRouter = require('./routes/logout');
 const roomsRouter = require('./routes/rooms');
 
 const app = express();
@@ -46,6 +47,7 @@ app.use([ '/', '/rooms' ], (req, res, next) => {
 
   next();
 });
+app.use('/logout', logoutRouter);
 app.use('/', indexRouter);
 app.use('/rooms', roomsRouter);
 
